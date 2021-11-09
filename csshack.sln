@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csshack", "csshack\csshack.csproj", "{9BCC391F-B034-4048-A0DB-5FADCB7701AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BCC391F-B034-4048-A0DB-5FADCB7701AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCC391F-B034-4048-A0DB-5FADCB7701AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCC391F-B034-4048-A0DB-5FADCB7701AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCC391F-B034-4048-A0DB-5FADCB7701AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1D84D5D-8590-48ED-A235-051F2DA69D20}
+	EndGlobalSection
+EndGlobal
