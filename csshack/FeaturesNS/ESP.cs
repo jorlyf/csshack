@@ -12,35 +12,30 @@ namespace csshack.FeaturesNS
 	internal class ESP
 	{
 		private LocalPlayer LocalPlayer { get; }
-		private List<Player> Players { get; set; }
-		private float[] ViewMatrix
+		private List<Player> Players { get; }
+		private float[] GetViewMatrix()
         {
-			get
-            {
-				float[] matrix = new float[16];
-				byte[] viewMatrixBuffer = new byte[64];
-				uint nBytesRead = uint.MinValue;
-				Kernel32API.ReadProcessMemory(Memory.ProcessHandle, (IntPtr)(0x7C2EAA64), viewMatrixBuffer, (uint)viewMatrixBuffer.Length, ref nBytesRead);
-				Buffer.BlockCopy(viewMatrixBuffer, 0, matrix, 0, 64);
-				return matrix;
-			}
-        }
-		public List<Rectangle> ESPBoxes
-		{
-			get
+			float[] matrix = new float[16];
+			byte[] viewMatrixBuffer = new byte[64];
+			uint nBytesRead = uint.MinValue;
+			Kernel32API.ReadProcessMemory(Memory.ProcessHandle, (IntPtr)(0x7A8DAA64), viewMatrixBuffer, (uint)viewMatrixBuffer.Length, ref nBytesRead);
+			Buffer.BlockCopy(viewMatrixBuffer, 0, matrix, 0, 64);
+			return matrix;
+		}
+		public List<Rectangle> GetESPBoxes()
+        {
+			float[] viewmatrix = GetViewMatrix();
+			List<Rectangle> espboxes = new List<Rectangle>();
+			Players.ForEach(player =>
 			{
-				List<Rectangle> espboxes = new List<Rectangle>();
-				Players.ForEach(player =>
+				if (player.Team != LocalPlayer.Team && player.Team != 1 && player.Health > 1)
 				{
-					if (player.Team != LocalPlayer.Team && player.Team != 1 && player.Health > 1)
-					{
-						Vector2 screen = new Vector2();
-						if (WorldToScreen(player.Position, ref screen))
-							espboxes.Add(new Rectangle((int)screen.X-20, (int)screen.Y-60, 40, 60));
-					}
-				});
-				return espboxes;
-			}
+					Vector2 screen = new Vector2();
+					if (WorldToScreen(player.Position, ref screen, viewmatrix))
+						espboxes.Add(new Rectangle((int)screen.X - 20, (int)screen.Y - 60, 40, 60));
+				}
+			});
+			return espboxes;
 		}
 		public Color EnemyColor { get; } = Color.DarkRed;
 		public ESP(LocalPlayer localPlayer, List<Player> players)
@@ -74,7 +69,7 @@ namespace csshack.FeaturesNS
 
 			return isVisible;
 		}
-		private bool WorldToScreen(Vector3 pos, ref Vector2 screen)
+		private bool WorldToScreen(Vector3 pos, ref Vector2 screen, float[] ViewMatrix)
 		{
 			Vector4 clipCoords;
 			clipCoords.X = pos.X * ViewMatrix[0] + pos.Y * ViewMatrix[1] + pos.Z * ViewMatrix[2] + ViewMatrix[3];
