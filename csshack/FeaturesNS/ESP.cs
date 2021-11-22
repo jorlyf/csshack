@@ -18,7 +18,7 @@ namespace csshack.FeaturesNS
 			float[] matrix = new float[16];
 			byte[] viewMatrixBuffer = new byte[64];
 			uint nBytesRead = uint.MinValue;
-			Kernel32API.ReadProcessMemory(Memory.ProcessHandle, (IntPtr)(0x7A8DAA64), viewMatrixBuffer, (uint)viewMatrixBuffer.Length, ref nBytesRead);
+			Kernel32API.ReadProcessMemory(Memory.ProcessHandle, (IntPtr)(Offsets.ViewMatrix), viewMatrixBuffer, (uint)viewMatrixBuffer.Length, ref nBytesRead);
 			Buffer.BlockCopy(viewMatrixBuffer, 0, matrix, 0, 64);
 			return matrix;
 		}

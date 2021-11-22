@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
+
+
 using csshack.FeaturesNS;
 using csshack.MemoryNS;
 using csshack.StructsNS;
@@ -18,23 +21,21 @@ namespace csshack
         {
             Overlay = app;
         }
-        public async void Run()
+        public void Run()
         {
-            await Task.Run(() =>
+            GetPlayers();
+            ESP = new ESP(LocalPlayer, Players);
+            while (true)
             {
                 GetPlayers();
-                ESP = new ESP(LocalPlayer, Players);
-                while (true)
+                Overlay.Clear();
+                List<Rectangle> espboxes = ESP.GetESPBoxes();
+                espboxes.ForEach(box =>
                 {
-                    GetPlayers();
-                    Overlay.Clear();
-                    ESP.GetESPBoxes().ForEach(box =>
-                    {
-                        Overlay.DrawBox(box, ESP.EnemyColor);
-                    });
-                    Thread.Sleep(15);
-                }
-            });
+                    Overlay.DrawBox(box, ESP.EnemyColor);
+                });
+                Thread.Sleep(20);
+            }
         }
         private void GetPlayers()
         {

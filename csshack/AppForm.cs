@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace csshack
@@ -35,12 +36,13 @@ namespace csshack
         {
             Graphics = this.CreateGraphics();
             Hack hack = new Hack(this);
-            hack.Run();
+            Thread hackThread  = new Thread(hack.Run);
+            hackThread.Start();
         }
 
         private void AppForm_Paint(object sender, PaintEventArgs e)
         {
-            Graphics = this.CreateGraphics();
+
         }
 
         public void DrawBox(Rectangle rectangle, Color color)
